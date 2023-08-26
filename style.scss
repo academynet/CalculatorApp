@@ -1,0 +1,259 @@
+
+
+$teal: #07F7BF;
+$green: #B4ED50;
+$yellow: #f4d063;
+$orange: #fc9d6b;
+$grey: #333;
+
+$border: mix(mix($teal, $green), $grey, 80%);
+$font: "brandon-grotesque", "Brandon Grotesque", "Source Sans Pro", "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+$padding: 12px;
+
+$easeOutCubic: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+
+* {
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    padding: 0;
+    margin: 0;
+    list-style: none !important;
+}
+
+*:focus {
+    outline: none !important;
+}
+
+body,
+html {
+    height: 100vh;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    align-content: flex-start;
+    justify-content: center;
+    perspective: 1000px;
+    margin: 0;
+    padding: calc($padding * 4);
+    font-family: $font;
+    color: white;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    background: $green;
+    background: linear-gradient(135deg, rgba($green, 1) 0%, rgba($teal, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$green', 
+        endColorstr='$teal', GradientType=1);
+}
+
+.calculator {
+    display: flex;
+    flex-flow: row wrap;
+    width: 259px;
+    box-shadow: 0 0 10px rgba(#555, .2);
+    border-radius: $padding;
+
+    &.pre-enter {
+        opacity: 0;
+        transform: rotateX(30deg) rotateY(30deg) translateY(300px) translateZ(0);
+        visibility: hidden;
+
+        .total {
+            opacity: 0;
+        }
+    }
+
+    &.on-enter {
+        opacity: 1;
+        transform: none;
+        visibility: visible;
+        transition: all 1000ms $easeOutCubic;
+
+        .total {
+            opacity: 1;
+            transition: opacity 300ms ease-out 1000ms;
+        }
+    }
+
+    button {
+        display: block;
+        padding: 0;
+        border: 0;
+        width: 64px;
+        height: 64px;
+        background: none;
+        font-family: $font;
+        cursor: pointer;
+        transition: all 200ms ease-out;
+
+        &:active,
+        &.active {
+            transition: all 100ms ease-in;
+        }
+    }
+
+    .screen {
+        width: 100%;
+        border-bottom: 1px solid $border;
+    }
+
+    .equation {
+        width: 100%;
+        padding: calc($padding / 2);
+        border-radius: calc($padding / 2) calc($padding / 2) 0 0;
+        background: white;
+        color: $grey;
+        overflow: hidden;
+
+        .summary,
+        .total {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+
+    .summary {
+        padding: calc($padding / 2) calc($padding / 2) 0;
+        height: 22px;
+        font-size: 16px;
+        font-weight: 500;
+        color: lighten($grey, 50%);
+    }
+
+    .total {
+        padding: calc($padding / 4) calc($padding / 2) calc($padding / 2);
+        font-size: 32px;
+    }
+
+    .buttons {
+        display: flex;
+    }
+
+    .numbers {
+        width: 194px;
+
+        ul {
+            display: flex;
+            flex-flow: row wrap;
+            background: rgba(white, .3);
+            border-bottom-left-radius: $padding;
+        }
+
+        button {
+            font-size: 24px;
+            font-weight: 400;
+            color: $grey;
+            background: rgba(white, .5);
+
+            &:hover,
+            &:focus {
+                background: rgba(white, .75);
+            }
+
+            &:active,
+            &.active {
+                background: rgba($grey, .05);
+            }
+        }
+
+        li {
+            border-bottom: 1px solid $border;
+            border-left: 1px solid $border;
+
+            &.zero,
+            &:last-child {
+                border-bottom: 0;
+            }
+
+            &.clear,
+            &:nth-child(2),
+            &:nth-child(5),
+            &:nth-child(8),
+            &.zero {
+                border-left: 0;
+            }
+        }
+
+        .clear {
+            width: 100%;
+
+            button {
+                width: 100%;
+                background: rgba(white, .25);
+
+                &:hover,
+                &:focus {
+                    background: rgba(white, .75);
+                }
+
+                &:active,
+                &.active {
+                    background: rgba($grey, .05);
+                }
+            }
+        }
+
+        .zero {
+            width: 129px;
+
+            button {
+                width: 100%;
+                border-bottom-left-radius: $padding;
+            }
+        }
+    }
+
+    .operators {
+        width: 65px;
+        border-left: 1px solid $border;
+
+        ul {
+            background: $yellow;
+            background: linear-gradient(to bottom, rgba($yellow, 1) 0%, rgba($orange, 1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$yellow', endColorstr='$orange', GradientType=0);
+            border-bottom-right-radius: $padding;
+        }
+
+        button {
+            font-size: 36px;
+            font-weight: 300;
+            color: white;
+
+            &:hover,
+            &:focus {
+                background: rgba(saturate(lighten(mix($orange, $yellow), 25%), 15%), .25);
+            }
+
+            &:active,
+            &.active {
+                background: rgba(saturate(darken(mix($orange, $yellow), 25%), 15%), .25);
+            }
+        }
+
+        li {
+            &:last-child {
+                button {
+                    border-bottom-right-radius: $padding;
+                }
+            }
+
+            &:not(:last-child) {
+                border-bottom: 1px solid $border;
+            }
+        }
+    }
+}
+
+@media only screen and (min-height: 424px) {
+    body {
+        // align-items: center;
+        align-content: center;
+        overflow: hidden;
+    }
+}
+
+
+
+
